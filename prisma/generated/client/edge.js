@@ -182,6 +182,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -189,7 +193,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
@@ -208,8 +212,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\" // Assuming PostgreSQL. Change if different (e.g., \"mysql\", \"sqlite\", \"sqlserver\", \"mongodb\")\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String        @id @default(uuid())\n  email     String        @unique\n  full_name String?\n  role      Role          @default(USER)\n  is_banned Boolean       @default(false)\n  createdAt DateTime      @default(now()) @map(\"created_at\")\n  reports   WaterReport[]\n\n  @@map(\"users\")\n}\n\nmodel WaterReport {\n  id                String       @id @default(uuid())\n  user_id           String\n  user              User         @relation(fields: [user_id], references: [id], onDelete: Cascade)\n  issue_type        IssueType\n  severity          Severity\n  description       String\n  location_address  String?\n  latitude          Float?\n  longitude         Float?\n  image_base64_data String[]     @default([]) @db.Text\n  status            ReportStatus @default(PENDING)\n  assigned_to       String? // Could be an ID of a technician or a name\n  createdAt         DateTime     @default(now()) @map(\"created_at\")\n  updatedAt         DateTime     @updatedAt @map(\"updated_at\")\n\n  @@map(\"water_reports\")\n}\n\nenum Role {\n  USER\n  ADMIN\n  TECHNICIAN\n}\n\nenum IssueType {\n  LEAKAGE\n  WATER_QUALITY_PROBLEM\n  OTHER\n}\n\nenum Severity {\n  LOW\n  MEDIUM\n  HIGH\n  CRITICAL\n}\n\nenum ReportStatus {\n  PENDING\n  IN_PROGRESS\n  RESOLVED\n}\n",
-  "inlineSchemaHash": "2db889710a2a9ad0a4ebc61d296f3074d5c73f4aa0fc319e70b92150a774fcf1",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"./generated/client\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\" // Assuming PostgreSQL. Change if different (e.g., \"mysql\", \"sqlite\", \"sqlserver\", \"mongodb\")\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String        @id @default(uuid())\n  email     String        @unique\n  full_name String?\n  role      Role          @default(USER)\n  is_banned Boolean       @default(false)\n  createdAt DateTime      @default(now()) @map(\"created_at\")\n  reports   WaterReport[]\n\n  @@map(\"users\")\n}\n\nmodel WaterReport {\n  id                String       @id @default(uuid())\n  user_id           String\n  user              User         @relation(fields: [user_id], references: [id], onDelete: Cascade)\n  issue_type        IssueType\n  severity          Severity\n  description       String\n  location_address  String?\n  latitude          Float?\n  longitude         Float?\n  image_base64_data String[]     @default([]) @db.Text\n  status            ReportStatus @default(PENDING)\n  assigned_to       String? // Could be an ID of a technician or a name\n  createdAt         DateTime     @default(now()) @map(\"created_at\")\n  updatedAt         DateTime     @updatedAt @map(\"updated_at\")\n\n  @@map(\"water_reports\")\n}\n\nenum Role {\n  USER\n  ADMIN\n  TECHNICIAN\n}\n\nenum IssueType {\n  LEAKAGE\n  WATER_QUALITY_PROBLEM\n  OTHER\n}\n\nenum Severity {\n  LOW\n  MEDIUM\n  HIGH\n  CRITICAL\n}\n\nenum ReportStatus {\n  PENDING\n  IN_PROGRESS\n  RESOLVED\n}\n",
+  "inlineSchemaHash": "4977e10377480a96590261a908ae5cfdb53539142bcbd13c05300b659de42cb9",
   "copyEngine": true
 }
 config.dirname = '/'
