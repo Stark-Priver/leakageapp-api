@@ -1,6 +1,6 @@
 import { Router, Response } from "express";
 import prisma from "../lib/prisma";
-import { ReportStatus } from "@prisma/client"; // Import ReportStatus
+import { ReportStatus } from "../../prisma/generated/client"; // Import ReportStatus
 import { authenticateToken, AuthenticatedRequest } from "../middleware/auth";
 
 const router = Router();
